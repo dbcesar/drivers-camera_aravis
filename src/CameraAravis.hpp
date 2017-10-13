@@ -56,7 +56,7 @@ namespace camera
             base::samples::frame::frame_mode_t convertArvToFrameMode(ArvPixelFormat format);
 
             friend void aravisCameraCallback(ArvStream *stream, CameraAravis *driver);
-            friend void controlLostCallback (CameraAravis *driver);
+            friend void controlLostCallback (ArvDevice *device, CameraAravis *driver);
 
         private:
             std::string path;

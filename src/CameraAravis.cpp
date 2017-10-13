@@ -17,11 +17,10 @@ namespace camera
             driver->callbackFcn(driver->callbackData);
     }
 	
-    void controlLostCallback (CameraAravis *driver) 
+    void controlLostCallback (ArvDevice *device, CameraAravis *driver) 
     {
-        std::cout << "ERROR: The connection was lost. Try to plug the camera and re-run the task." << std::endl;
         if(driver->errorCallbackFcn != 0)
-            driver->errorCallbackFcn(driver->callbackData);
+            driver->errorCallbackFcn(driver->errorCallbackData);
     }
 
     CameraAravis::CameraAravis():
@@ -98,7 +97,7 @@ namespace camera
         if(0 >= callback_handler)
             throw std::runtime_error("CameraAravis: cannot connect callback!");
 
-        error_callback_handler = g_signal_connect(arv_camera_get_device(camera), "control-lost", G_CALLBACK (controlLostCallback), NULL);
+        error_callback_handler = g_signal_connect(arv_camera_get_device(camera), "control-lost", G_CALLBACK (controlLostCallback), this);
         if(0 >=error_callback_handler)
             throw std::runtime_error("CameraAravis: cannot connect error callback!");
     }
