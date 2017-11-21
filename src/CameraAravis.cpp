@@ -37,7 +37,10 @@ namespace camera
     CameraAravis::~CameraAravis()
     {
         if(stream)
+        {
+            arv_stream_set_emit_signals(stream, FALSE);
             g_object_unref(stream);
+        }
         if(camera)
             g_object_unref(camera);
     }
